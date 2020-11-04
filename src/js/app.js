@@ -1,7 +1,8 @@
-var activePlayer, circleImg, crossImg, gamePlaying, size;
+/*jslint es6 */
+let activePlayer, circleImg, crossImg, gamePlaying, size;
 
 
-var toWin = [ 
+let toWin = [
     [NaN, NaN, NaN], //[1, 2, 3]
     [NaN, NaN, NaN], //[4, 5, 6]
     [NaN, NaN, NaN], //[7, 8, 9]
@@ -17,22 +18,23 @@ init();
 
 
 function Board() {
-    var i = toWin.length;
+    let i = toWin.length;
     while (i-- > 0) {
-        toWin.splice(i, 1, [NaN, NaN, NaN])
-    };       
-    for (var i = 1; i <= size; i++) {
-        document.getElementById('fld-' + i).addEventListener('click', field);
+        toWin.splice(i, 1, [NaN, NaN, NaN]);
+    }
+
+    for (let j = 1; j <= size; j++) {
+        document.getElementById('fld-' + j).addEventListener('click', field);
     }
 };
 
 
 function image(activeNum) {
-    if (activeNum === 0) { 
+    if (activeNum === 0) {
         circleImg = new Image();
         circleImg.src = './img/circle.png';
-        circleImg.setAttribute('class', 'circle')  
-        return circleImg;        
+        circleImg.setAttribute('class', 'circle');
+        return circleImg;
     } else {
         crossImg = new Image();
         crossImg.src = './img/cross.png';
@@ -84,7 +86,7 @@ function insert(value, num) {
 function field(insert) {
     ourTarget = insert.target.getAttribute('id');
     ourField = document.getElementById(ourTarget)
-    if (activePlayer === 0) {       
+    if (activePlayer === 0) {
         ourField.appendChild(image(activePlayer));
         ourField.removeEventListener('click', field);
         ourField.setAttribute("class", "field-dis");
@@ -110,13 +112,13 @@ function position(player, field) {
 
 function chceckWin(winner) {
     toWin.forEach(line => {
-        line.forEach((fld, i, line) => {           
+        line.forEach((fld, i, line) => {
             if (line[0] === line[1] && line[1] === line[2] && fld !== NaN) {
                 document.querySelector('#name-' + winner).textContent = 'Winner!';
                 document.querySelector('.player-' + winner + '-panel').classList.add('winner');
                 document.querySelector('.player-' + winner + '-panel').classList.remove('active');
                 gamePlaying = false;
-                for (var i = 1; i <= size; i++) {
+                for (let i = 1; i <= size; i++) {
                     document.getElementById('fld-' + i).removeEventListener('click', field);
                     document.getElementById('fld-' + i).setAttribute("class", "field-dis");
                 }
@@ -127,8 +129,8 @@ function chceckWin(winner) {
 };
 
 
-function checkFreeFields() { 
-    for (var i = 1; i <= size; i++) {
+function checkFreeFields() {
+    for (let i = 1; i <= size; i++) {
         if (document.getElementById('fld-' + i).getAttribute("class") === "field") {
             break;
         } else if (i === 9){
@@ -165,7 +167,7 @@ function init() {
     size = 9;
     Board();
     activePlayer = 0;
-    for (var i = 1; i <= size; i++) {
+    for (let i = 1; i <= size; i++) {
             document.getElementById('fld-' + i).innerHTML = '';
             document.getElementById('fld-' + i).setAttribute("class", "field");
     }
